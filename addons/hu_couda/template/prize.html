@@ -1,0 +1,66 @@
+{template 'header'}
+<link href="./resource/css/app.css" rel="stylesheet">
+<ul class="nav nav-tabs">
+    <li class="active"><a href="javascript:;">中奖情况</a></li>
+</ul>
+<div class="panel panel-default">
+    <div class="table-responsive panel-body">
+        <table class="table table-hover">
+            <thead class="navbar-inner">
+            <tr>
+                <th style="width:60px;">开奖期数</th>
+                <th style="width:80px;">真实姓名</th>
+                <th style="width:100px;">昵称</th>
+                <th style="width:100px;">电话</th>
+                <th style="width:100px;">中奖码</th>
+                <th style="width:100px;">是否核销</th>
+                <th style="width:100px;">地址</th>
+                <th style="width:100px;">奖品等级</th>
+            </tr>
+            </thead>
+            <tbody>
+            {loop $result $item}
+            <tr>
+                <td>{$item['prize_id']}</td>
+                <td>{$item['address']['name']}</td>
+                <td>{$item['minfo']['nickname']}</td>
+                <td>{$item['address']['phone']}</td>
+                <td>{$item['code']}</td>
+                <td>
+                    {if $item['is_write_off'] == 1}
+                    已核销
+                    {else}
+                    <button class="write_off" data-id="{$item['result_id']}">核销</button>
+                    {/if}
+                </td>
+                <td>{$item['address']['address']}</td>
+                <td>{$type[$item['type']]}</td>
+            </tr>
+            {/loop}
+            </tbody>
+        </table>
+    </div>
+</div>
+<script type="application/javascript">
+    $(function () {
+        $('.write_off').click(function () {
+            id = $(this).data('id');
+            $.post('', {id:id, op:'write_off'}, function (data) {
+                location.href = location.href;
+            }, 'json')
+        });
+
+        $('.delete').click(function () {
+            id = $(this).attr('id');
+            $.post('', {id:id, op:'delete'}, function (data) {
+                if (data.status == 1) {
+                    location.href = location.href;
+                } else {
+                    alert('删除失败');
+                }
+
+            }, 'json')
+        });
+    });
+
+</script>

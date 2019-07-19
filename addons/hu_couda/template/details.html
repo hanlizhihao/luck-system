@@ -1,0 +1,316 @@
+{template 'header'}
+
+                            <script type="text/javascript" src="../../../../addons/{$name}/template/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<link rel="stylesheet" href="https://fengyuanchen.github.io/cropper/css/cropper.css"></link>
+<link rel="stylesheet" href="../../../../addons/{$name}/template/css/cropper.min.css">
+<link rel="stylesheet" href="../../../../addons/{$name}/template/css/ImgCropping.css">
+<div class="main">
+    <div class="panel panel-info">
+        <div class="panel-heading">添加</div>
+        <div class="panel-body">
+            <form action="" method="get" class="form-horizontal" id="myform" role="form">
+
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">*标题</label>
+                    <div class="col-sm-7 col-lg-8 col-md-8 col-xs-12">
+                        <input class="form-control" name="title" placeholder="标题" value="{$prize['title']}" type="text" readonly>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">*赞助商：</label>
+                    <div class="col-sm-7 col-lg-8 col-md-8 col-xs-12">
+                        <input class="form-control" name="uname" placeholder="赞助商" value="{$prize['uname']}" readonly type="text">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">*开奖方式：</label>
+                    <div class="col-sm-7 col-lg-8 col-md-8 col-xs-12">
+                        {if $prize['type'] == 1}
+                        <input class="form-control" name="uname" placeholder="" value="时间" readonly type="text">
+                        {elseif $prize['type'] == 2}
+                        <input class="form-control" name="uname" placeholder="" value="人数" readonly type="text">
+                        {else}
+                        <input class="form-control" name="uname" placeholder="" value="手动" readonly type="text">
+                        {/if}
+
+                    </div>
+                </div>
+
+                {if $prize['type'] == 1}
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">*开奖时间：</label>
+                    <div class="col-sm-7 col-lg-8 col-md-8 col-xs-12">
+                        <input class="form-control"   id="logmax"  name="opentime" placeholder="开奖时间" type="text" value="{$prize['typevalue']}"  readonly>
+                    </div>
+                </div>
+                {/if}
+
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">组团人数:：</label>
+                    <div class="col-sm-7 col-lg-8 col-md-8 col-xs-12">
+                        <select class="select valid" name="max_group_num" size="1" aria-invalid="false" style="width: 150px;">
+                            <option {if $prize['max_group_num'] == 0}selected = "selected"{/if} value="0">单人抽奖</option>
+                            <option {if $prize['max_group_num'] == 3}selected = "selected"{/if} value="3">3人团</option>
+                            <option {if $prize['max_group_num'] == 6}selected = "selected"{/if} value="6">6人团</option>
+                            <option {if $prize['max_group_num'] == 9}selected = "selected"{/if} value="9">9人团</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">path：</label>
+                    <div class="col-sm-7 col-lg-8 col-md-8 col-xs-12">
+                        <input class="form-control" name="path" placeholder="path" value="{$prize['jump_program']['path']}" readonly type="text">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">appid：</label>
+                    <div class="col-sm-7 col-lg-8 col-md-8 col-xs-12">
+                        <input class="form-control" name="appid" placeholder="appid" value="{$prize['jump_program']['appid']}" readonly type="text">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">app_name：</label>
+                    <div class="col-sm-7 col-lg-8 col-md-8 col-xs-12">
+                        <input class="form-control" name="app_name" placeholder="app_name" value="{$prize['jump_program']['app_name']}" readonly  type="text">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">wechat_no：</label>
+                    <div class="col-sm-7 col-lg-8 col-md-8 col-xs-12">
+                        <input class="form-control" name="wechat_no" placeholder="wechat_no" value="{$prize['wechat_no']}" readonly type="text">
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">*一等奖奖品:</label>
+                    <div class="col-sm-7 col-lg-8 col-md-8 col-xs-12">
+                        <input class="form-control" name="fir_val" placeholder="一等奖奖品" value="{$prize['fir_val']}" readonly type="text">
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">一等奖类型:</label>
+                    <div class="col-sm-7 col-lg-8 col-md-8 col-xs-12">
+                        <select class="select valid" name="fir_ptype" size="1" style="width: 150px;" aria-invalid="false">
+                            <option {if $prize['fir_ptype'] == 0}selected = "selected"{/if} value="0">实物</option>
+                            <option {if $prize['fir_ptype'] == 1}selected = "selected"{/if} value="1">现金</option>
+                            <option {if $prize['fir_ptype'] == 2}selected = "selected"{/if} value="2">虚拟</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">*一等奖数量:</label>
+                    <div class="col-sm-7 col-lg-8 col-md-8 col-xs-12">
+                        <input class="form-control" name="fir_num" value="{$prize['fir_num']}" readonly placeholder="一等奖数量" type="text">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">*二等奖奖品:</label>
+                    <div class="col-sm-7 col-lg-8 col-md-8 col-xs-12">
+                        <input class="form-control" name="sec_val" value="{$prize['sec_val']}" readonly placeholder="" type="text">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">*二等奖奖品:</label>
+                    <div class="col-sm-7 col-lg-8 col-md-8 col-xs-12">
+                        <select class="select" name="sec_ptype" size="1" style="width: 150px;">
+                            <option {if $prize['sec_ptype'] == 0}selected = "selected"{/if} value="0">实物</option>
+                            <option {if $prize['sec_ptype'] == 1}selected = "selected"{/if} value="1">现金</option>
+                            <option {if $prize['sec_ptype'] == 2}selected = "selected"{/if} value="2">虚拟</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">*二等奖数量:</label>
+                    <div class="col-sm-7 col-lg-8 col-md-8 col-xs-12">
+                        <input class="form-control" name="sec_num" value="{$prize['sec_num']}" readonly placeholder="" type="text">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">*三等奖奖品:</label>
+                    <div class="col-sm-7 col-lg-8 col-md-8 col-xs-12">
+                        <input class="form-control" name="trd_val" value="{$prize['trd_val']}" readonly placeholder="" type="text">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">三等奖类型:</label>
+                    <div class="col-sm-7 col-lg-8 col-md-8 col-xs-12">
+                        <select class="select" name="trd_ptype" size="1" style="width: 150px;">
+                            <option {if $prize['trd_ptype'] == 0}selected = "selected"{/if} value="0">实物</option>
+                            <option {if $prize['trd_ptype'] == 1}selected = "selected"{/if} value="1">现金</option>
+                            <option {if $prize['trd_ptype'] == 2}selected = "selected"{/if} value="2">虚拟</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">*三等奖数量:</label>
+                    <div class="col-sm-7 col-lg-8 col-md-8 col-xs-12">
+                        <input class="form-control" name="trd_num" value="{$prize['trd_num']}" readonly placeholder="" type="text">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">说明:</label>
+                    <div class="col-sm-7 col-lg-8 col-md-8 col-xs-12">
+                        <textarea name="description" cols="" rows="" class="textarea" placeholder="" dragonfly="true" style="margin: 0px; height: 107px; width: 1051px;">{$prize['description']}</textarea>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+                    <div class="" >
+                        <img style="" id="finalImg" src="{$prize['attach_img']}" width="50%" height="50%">
+                    </div>
+                </div>
+
+
+
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="../../../../addons/{$name}/template/js/cropper.min.js"></script>
+<script type="application/javascript">
+
+    function selectImg(file) {
+        if (!file.files || !file.files[0]) {
+            return;
+        }
+        var reader = new FileReader();
+        reader.onload = function (evt) {
+            var replaceSrc = evt.target.result;
+            //更换cropper的图片
+            $('#tailoringImg').cropper('replace', replaceSrc, false);//默认false，适应高度，不失真
+        }
+        reader.readAsDataURL(file.files[0]);
+    }
+    //关闭裁剪框
+    function closeTailor() {
+        $(".tailoring-container").toggle();
+    }
+
+
+    $(function () {
+
+        $('#submit').click(function () {
+            $.post('', $('#myform').serialize(), function (data) {
+                if (data.states == 1) {
+                    alert('添加成功');
+                    location.href = location.href;
+                } else {
+                    alert(data.info);
+                }
+            }, 'json');
+        });
+
+        $('#add-extraData').click(function () {
+            html = '<div class="form-group">' +
+                '<label class="col-xs-12 col-sm-3 col-md-2 control-label">extraData:</label>' +
+                '<div class="col-sm-7 col-lg-8 col-md-8 col-xs-12">' +
+                '<input class="form-control" name="keys[]" placeholder="" type="text">' +
+                '</div>' +
+                '</div>';
+
+            html += '<div class="form-group">' +
+                '<label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>' +
+                '<div class="col-sm-7 col-lg-8 col-md-8 col-xs-12">' +
+                '<input class="form-control" name="vals[]" placeholder="" type="text">' +
+                '</div>' +
+                '</div>';
+
+            $('#extraData_add').append(html);
+
+        });
+
+        $("#replaceImg").on("click", function () {
+            console.log(11512);
+            $(".tailoring-container").toggle();
+        });
+
+        //cropper图片裁剪
+        $('#tailoringImg').cropper({
+            aspectRatio: 2 / 1,//默认比例
+            preview: '.previewImg',//预览视图
+            guides: false,  //裁剪框的虚线(九宫格)
+            autoCropArea: 0.5,  //0-1之间的数值，定义自动剪裁区域的大小，默认0.8
+            movable: false, //是否允许移动图片
+            dragCrop: true,  //是否允许移除当前的剪裁框，并通过拖动来新建一个剪裁框区域
+            movable: true,  //是否允许移动剪裁框
+            resizable: true,  //是否允许改变裁剪框的大小
+            zoomable: false,  //是否允许缩放图片大小
+            mouseWheelZoom: false,  //是否允许通过鼠标滚轮来缩放图片
+            touchDragZoom: true,  //是否允许通过触摸移动来缩放图片
+            rotatable: true,  //是否允许旋转图片
+            crop: function (e) {
+                // 输出结果数据裁剪图像。
+            }
+        });
+
+
+        $("#sureCut").on("click", function () {
+            var urlConfig = {upload: '/app/index.php?i=2&c=entry&op=receive_card&do=upload&m=c_jiang&a=wxapp&jietu=1'}
+            if ($("#tailoringImg").attr("src") == null) {
+                return false;
+            } else {
+                $('#tailoringImg').cropper("getCroppedCanvas").toBlob(function (blob) {
+                    var formData = new FormData();
+                    formData.append('file', blob, 'file')
+                    $.ajax({
+                        method: "post",
+                        url: urlConfig.upload, //用于文件上传的服务器端请求地址
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function (result) {
+                            console.log(result);
+                            if (typeof result == "string") {
+                                result = $.parseJSON(result);
+                            }
+                            if (result.data && result.data.length) {
+                                currentUploadDom.parent().next().next().show();
+                                currentUploadDom.attr("src", result.data[0]);
+                                //close
+                                cutView.hide();
+                                stopCropper();
+                            }
+                            if (result.status == 1) {
+                                $('#attach_id').val(result.info);
+                                alert('裁剪成功')
+                            } else {
+                                alert('请上传图片')
+                            }
+
+                        }
+                    });
+
+                });
+                //裁剪完成预览
+                var cas = $('#tailoringImg').cropper('getCroppedCanvas');//获取被裁剪后的canvas
+                var base64url = cas.toDataURL('image/png'); //转换为base64地址形式
+                $("#finalImg").prop("src", base64url).show();//显示为图片的形式
+                //关闭裁剪框
+                closeTailor();
+            }
+        });
+    });
+</script>
+

@@ -1,0 +1,50 @@
+{template 'header'}
+<link href="./resource/css/app.css" rel="stylesheet">
+<ul class="nav nav-tabs">
+    <li class=""><a href="{php echo $this->createWeburl('goods');}">卡券管理</a></li>
+    <li class=""><a href="{php echo $this->createWeburl('goods', array('op' => 'addshow'));}">添加卡券</a></li>
+</ul>
+<div class="panel panel-default">
+    <div class="table-responsive panel-body">
+        <table class="table table-hover">
+            <thead class="navbar-inner">
+            <tr>
+                <th style="width:60px;">序号</th>
+                <th style="width:80px;">卡券号</th>
+                <th style="width:80px;">状态</th>
+            </tr>
+            </thead>
+            <tbody>
+            {loop $list $item}
+            <tr>
+                <td>{$item['id']}</td>
+                <td>{$item['voucher']}</td>
+                <td>{$status_msg[$item['status']]}</td>
+            </tr>
+            {/loop}
+            </tbody>
+        </table>
+    </div>
+    {$pager}
+</div>
+<script type="application/javascript">
+    $(function () {
+        $('.delete').click(function () {
+
+            if (!confirm('确认要删除?')) {
+                return false;
+            }
+
+            id = $(this).attr('id');
+            $.post('', {id:id, op:'delete'}, function (data) {
+                if (data.status == 1) {
+                    location.href = location.href;
+                } else {
+                    alert('删除失败');
+                }
+
+            }, 'json')
+        });
+    });
+
+</script>

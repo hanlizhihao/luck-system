@@ -1,0 +1,35 @@
+{template 'header'}
+
+<div class="main">
+    <div class="panel panel-info">
+        <div class="panel-heading">关联店铺</div>
+        <div class="panel-body">
+            <form action="{php echo $this->createWeburl('member');}" method="post" class="form-horizontal" id="myform">
+
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">{$member['nickname']},选择店铺</label>
+                    <div class="col-sm-7 col-lg-8 col-md-8 col-xs-12">
+                        <select class="select valid" name="shop_id" id="shop_id" size="1" aria-invalid="false" style="width: 450px;">
+                            {loop $shop  $item}
+                            <option value="{$item['id']}">{$item['shop_name']}</option>
+                            {/loop}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+                    <div class="" >
+                        <input type="hidden" name="op" value="addgl">
+                        <input type="hidden" name="id" value="{$id}">
+                        <input type="submit" name="submit" id="submit" value="关联" class="btn btn-primary">
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
